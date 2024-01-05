@@ -73,6 +73,8 @@ avce la méthode **``git init``** :
     ```
    - Cette commande crée un dossier caché appelé `.git` dans le répertoire du projet, qui contiendra toutes les informations de suivi des versions.
 
+   ![image](images/rep_git.jpeg)
+
 3. **Ajout de Fichiers au Suivi de Version :**
    - Utilisez la commande `git add` pour ajouter des fichiers au suivi de version. Par exemple, pour ajouter tous les fichiers du répertoire courant :
      ```bash
@@ -96,6 +98,7 @@ avce la méthode **``git init``** :
 
 Votre projet est maintenant sous versionnement avec Git, et vous pouvez continuer à ajouter, modifier et valider vos fichiers au fur et à mesure que votre projet évolue. 
 
+![image](images/méthode_init.png)
 
 ### 2.2 **méthode clonage : ``git clone``**
 
@@ -216,11 +219,37 @@ La commande `git config` est utilisée pour configurer les paramètres de Git su
     git config --unset user.email
     ```
 
+## 4. **l'état actuel : `git status`**
+
+>La commande `git status` est utilisée pour afficher l'état actuel du répertoire de travail en comparaison avec la zone de préparation (staging area) et le dernier commit. 
+```bash
+git status
+```
+La sortie de cette commande vous donnera des informations sur les modifications non suivies, les fichiers modifiés, les fichiers en attente d'être ajoutés (staged), les branches actuelles.
+
+- **informations fournies par `git status` :**
+
+1. **Changements non suivis (Untracked files)** : 
+   
+   - Listes des fichiers présents dans votre répertoire de travail mais qui ne sont pas encore ajoutés à la zone de préparation. Vous pouvez les ajouter avec `git add`.
+
+2. **Changements modifiés mais non encore ajoutés (Changes not staged for commit)** : 
+   
+   - Liste des fichiers modifiés dans votre répertoire de travail mais qui n'ont pas encore été ajoutés à la zone de préparation. Vous pouvez les ajouter avec `git add`.
+
+3. **Changements prêts à être commités (Changes to be committed)** : 
+   - Liste des fichiers ajoutés à la zone de préparation et prêts à être inclus dans le prochain commit.
+
+4. **La branche actuelle et son état** : 
+   - Si vous êtes sur une branche particulière, `git status` vous indiquera sur quelle branche vous vous trouvez et si elle est en avance, en retard ou à jour par rapport à la branche distante (remote branch).
+
+![image](images/status.png)
+
+`git status` est une commande utile pour obtenir un aperçu rapide de l'état de votre répertoire de travail et pour suivre les modifications en cours. Elle peut vous aider à décider quels fichiers ajouter, commités, ou ignorer.
 
 
 
-
-## 4. **Ajouter les modifications:``git add``**
+## 5. **Ajouter les modifications:``git add``**
 
 La commande `git add` en Git est utilisée pour ajouter des modifications de fichiers au "staging area" (zone de préparation ou index), afin de les inclure dans le prochain commit. 
 
@@ -305,7 +334,7 @@ La commande `git add` en Git est utilisée pour ajouter des modifications de fic
 
 
 
-## 5. **Enregistrer les modifications:``git commit``**
+## 6. **Enregistrer les modifications:``git commit``**
 
 
 La commande `git commit` en Git est utilisée pour enregistrer les modifications actuellement présentes dans la "staging area" (zone de préparation ou index) dans le dépôt Git local sous la forme d'un nouveau commit. 
@@ -358,114 +387,49 @@ La commande `git commit` en Git est utilisée pour enregistrer les modifications
 
 
 
-## 6. **Pousser les modifications:``git push``**
+## 7. **Pousser les modifications:``git push``**
 
 La commande `git push` en Git est utilisée pour pousser les modifications locales vers un dépôt distant. Elle sert à mettre à jour le dépôt distant avec les derniers commits de votre branche locale. 
+
+- **Pusher sur la branche par défaut:**
+   
+   -  La commande git push tout court est utilisée pour pousser les modifications locales vers le dépôt distant. Voici comment elle est généralement utilisée :
+
+   ```bash
+   git push
+   ```
+
+   Lorsque vous utilisez cette commande sans spécifier de branche, Git tentera de pousser la branche locale courante vers la branche correspondante sur le dépôt distant configuré par défaut .
+
+
 
 
 - **Pusher sur une Branche Spécifique :**
 
-    - Cette commande pousse les commits de la branche spécifiée vers le dépôt distant (par exemple, `origin` est souvent utilisé pour désigner le dépôt distant par défaut).
+   - Cette commande pousse les commits de la branche spécifiée vers le dépôt distant (par exemple, `origin` est souvent utilisé pour désigner le dépôt distant par défaut).
 
     ```bash
     git push origin nom_de_la_branche
     ```
 
 
-### Pusher Toutes les Branches :
 
-```bash
-git push --all origin
-```
 
-- Cela pousse toutes les branches locales vers le dépôt distant.
+- **Forcer le Push (Attention à l'Utilisation) :**
+   
+   - Utiliser `--force` ou `-f` force le push même si cela entraîne un rejet non lié à une mise à jour rapide. Cependant, soyez prudent avec cette option car elle peut entraîner la perte d'historique et perturber le travail des autres collaborateurs.
 
-### Forcer le Push (Attention à l'Utilisation) :
+   ```bash
+   git push --force origin nom_de_la_branche
+   ```
 
-```bash
-git push --force origin nom_de_la_branche
-```
+   ou
 
-ou
-
-```bash
-git push -f origin nom_de_la_branche
-```
-
-- Utiliser `--force` ou `-f` force le push même si cela entraîne un rejet non lié à une mise à jour rapide. Cependant, soyez prudent avec cette option car elle peut entraîner la perte d'historique et perturber le travail des autres collaborateurs.
-
-### Pusher en Utilisant SSH (au lieu de HTTPS) :
-
-```bash
-git push git@github.com:utilisateur/nom_du_depot.git nom_de_la_branche
-```
-
-- Cela peut être utilisé pour pousser en utilisant SSH plutôt que HTTPS, utile si vous avez configuré votre dépôt distant avec une URL SSH.
-
-### Configurer le Suivi de Branche (Upstream) :
-
-```bash
-git push -u origin nom_de_la_branche
-```
-
-- L'option `-u` configure la branche locale pour suivre la branche distante, ce qui simplifie les futurs pushes.
-
-### Supprimer une Branche Distante :
-
-```bash
-git push origin --delete nom_de_la_branche
-```
-
-- Cela supprime la branche spécifiée du dépôt distant.
-
-### Pusher avec Vérification GPG :
-
-```bash
-git push --signed
-```
-
-- Si vous signez vos commits avec GPG, cela pousse en vérifiant également la signature GPG.
-
-### Pusher avec Verification Forcée GPG :
-
-```bash
-git push --signed=force
-```
-
-- Il s'agit d'une version forcée de la vérification GPG.
-
-En général, `git push` est utilisé pour synchroniser votre travail local avec le dépôt distant, permettant à d'autres collaborateurs d'accéder à vos modifications. Les options offrent une flexibilité supplémentaire en fonction des besoins spécifiques du workflow du projet. Il est important de comprendre les implications de chaque option, en particulier celles qui peuvent modifier l'historique du dépôt.
+   ```bash
+   git push -f origin nom_de_la_branche
+   ```
 
 
 
 
 
-
-
-6. **`git push`**
-   - *Description :* Pousse les changements locaux vers un dépôt distant, généralement après un commit local.
-   - *Exemple :* `git push origin master`
-   - *Options :* 
-     - `<remote>` : Nom du dépôt distant.
-     - `<branch>` : Nom de la branche.
-
-7. **`git restore`**
-   - *Description :* Restaure les fichiers depuis le dernier commit ou l'index.
-   - *Exemple :* `git restore --source=HEAD --staged --worktree fichier.txt`
-   - *Options :* 
-     - `--source` : Spécifie la source à partir de laquelle restaurer (HEAD, index, ou working directory).
-
-8. **`git log`**
-   - *Description :* Affiche l'historique des commits. Utile pour voir qui a fait des changements, quand et avec quels messages.
-   - *Exemple :* `git log`
-   - *Options :* 
-     - `--oneline` : Affiche chaque commit sur une ligne.
-
-9. **`git diff`**
-   - *Description :* Affiche les différences entre les commits, l'index et le répertoire de travail. Utile pour visualiser les modifications avant de les commiter.
-   - *Exemple :* `git diff`
-   - *Options :* 
-     - `--cached` : Affiche les différences entre l'index et le dernier commit.
-     - `<commit>` : Affiche les différences entre le commit spécifié et le répertoire de travail.
-
-Ces commandes constituent une base solide pour commencer avec Git, mais il existe de nombreuses autres fonctionnalités et commandes à explorer à mesure que vous approfondissez votre utilisation de Git. Vous pouvez toujours consulter la documentation officielle de Git pour des informations plus détaillées sur chaque commande.
